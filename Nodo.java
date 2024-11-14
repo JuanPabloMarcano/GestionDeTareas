@@ -53,4 +53,89 @@ public class Nodo {
         }
     }
   }
+    
+    class tarea{
+        private String titulo; 
+        private String descripcion; 
+        private String fechaLimite; 
+        private String estado; 
+        private String asignadoA;
+        
+        public String getTitulo() {
+            return titulo;
+        }
+        public void setTitulo(String titulo) {
+            this.titulo = titulo;
+        }
+        public String getDescripcion() {
+            return descripcion;
+        }
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+        public String getFechaLimite() {
+            return fechaLimite;
+        }
+        public void setFechaLimite(String fechaLimite) {
+            this.fechaLimite = fechaLimite;
+        }
+        public String getEstado() {
+            return estado;
+        }
+        public void setEstado(String estado) {
+            this.estado = estado;
+        }
+        public String getAsignadoA() {
+            return asignadoA;
+        }
+        public void setAsignadoA(String asignadoA) {
+            this.asignadoA = asignadoA;
+        }
+    }
+    
+    class usuario{
+        private String nombre; 
+        private String apellido; 
+        private String cedula; 
+        private String nombreUsuario; 
+        private String contraseña; 
+        private String tipoUsuario;
+
+        public String getNombre() {
+            return nombre;
+        }
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+        public String getApellido() {
+            return apellido;
+        }
+        public void setApellido(String apellido) {
+            this.apellido = apellido;
+        }
+        public String getCedula() {
+            return cedula;
+        }
+        public void setCedula(String cedula) {
+            this.cedula = cedula;
+        }
+        public String getNombreUsuario() {
+            return nombreUsuario;
+        }
+        public void setNombreUsuario(String nombreUsuario) {
+            this.nombreUsuario = nombreUsuario;
+        }
+        public String getContraseña() {
+            return contraseña;
+        }
+        public void setContraseña(String contraseña) {
+            this.contraseña = contraseña;
+        }
+        public String getTipoUsuario() {
+            return tipoUsuario;
+        }
+        public void setTipoUsuario(String tipoUsuario) {
+            this.tipoUsuario = tipoUsuario;
+        } 
+    }
 }
