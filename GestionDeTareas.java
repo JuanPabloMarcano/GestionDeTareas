@@ -25,7 +25,6 @@ public class Proyecto_gestión_de_tareas {
             System.out.println("------------------");
             System.out.print("Seleccione una opción: ");
 
-            // Validación de entrada para opción del menú principal
             try {
                 opcion = scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -37,25 +36,22 @@ public class Proyecto_gestión_de_tareas {
             switch (opcion) {
                 case 1:
                     System.out.println("Has seleccionado Usuario.");
+                    // Aquí podrías se añadira lo de usuario
                     break;
                 case 2:
-                    boolean claveValida = false;
-                    while (!claveValida) {
-                        System.out.print("Ingrese la clave de 4 dígitos: ");
-                        int clave = 0;
+                    boolean accesoAdministrador = false;
+                    while (!accesoAdministrador) {
+                        System.out.println("Has seleccionado Administrador.");
+                        System.out.flush();
 
-                        // Validación de entrada para clave de administrador
-                        try {
-                            clave = scanner.nextInt();
-                            if (clave != 1234) {
-                                System.out.println("Clave incorrecta.");
-                                continue; // volver a pedir la clave
-                            }
-                            claveValida = true;
-                        } catch (InputMismatchException e) {
-                            System.out.println("Por favor, ingrese una clave válida (4 dígitos numéricos).");
-                            scanner.next(); 
-                            continue; // volver a pedir la clave
+                        System.out.print("Ingrese la contraseña de administrador: ");
+                        String claveIngresada = scanner.next();
+
+                        // Verificara si habra administradores activos
+                        if (verificarAdministrador(claveIngresada) || claveIngresada.equals("1234")) {
+                            accesoAdministrador = true;
+                        } else {
+                            System.out.println("Clave incorrecta o no es una cuenta de administrador.");
                         }
                     }
 
@@ -126,9 +122,9 @@ public class Proyecto_gestión_de_tareas {
     }
 
     public static void crearUsuario(String nombre, String apellido, String cedula, String nombreUsuario, String contraseña, String tipoUsuario) {
-        // para guardar usuario en un archivo txt
+        //para guardar usuario en un archivo txt
         try {
-            File file = new File("usuarios\\" + nombreUsuario + ".txt");
+            File file = new File("usuarios/" + nombreUsuario + ".txt");
             file.getParentFile().mkdirs();
             FileWriter writer = new FileWriter(file);
             writer.write("Nombre: " + nombre + "\n");
@@ -146,8 +142,8 @@ public class Proyecto_gestión_de_tareas {
     }
 
     public static void eliminarUsuario(String nombreUsuario) {
-        // para eliminar usuario
-        File file = new File("usuarios\\" + nombreUsuario + ".txt");
+        //para eliminar usuario
+        File file = new File("usuarios/" + nombreUsuario + ".txt");
         if (file.delete()) {
             System.out.println("Usuario eliminado correctamente.");
         } else {
@@ -156,7 +152,7 @@ public class Proyecto_gestión_de_tareas {
     }
 
     public static void modificarUsuario(String nombreUsuario) {
-        // para modificar usuario
+        //para modificar usuario
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese los nuevos datos del usuario:");
         System.out.print("Nombre: ");
@@ -174,5 +170,32 @@ public class Proyecto_gestión_de_tareas {
 
         eliminarUsuario(nombreUsuario); // Elimina el archivo antiguo
         crearUsuario(nuevoNombre, nuevoApellido, nuevaCedula, nuevoNombreUsuario, nuevaContraseña, nuevoTipoUsuario); // Crea un archivo nuevo con los datos modificados
+    }
+
+    public static boolean verificarAdministrador(String contraseña) {
+        //para verificar si la contraseña corresponde a un administrador
+        File folder = new File("usuarios");
+        if (folder.exists() && folder.isDirectory()) {
+            for (File file : folder.listFiles()) {
+                if (file.isFile() && file.getName().endsWith(".txt")) {
+                    try (Scanner scanner = new Scanner(file)) {
+                        while (scanner.hasNextLine()) {
+                            String line = scanner.nextLine();
+                            if (line.contains("Contraseña: " + contraseña)) {
+                                while (scanner.hasNextLine()) {
+                                    String userTypeLine = scanner.nextLine();
+                                    if (userTypeLine.contains("Tipo de usuario: administrador")) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
